@@ -26,7 +26,7 @@ const Signup = () => {
       console.log(user);
       toast('User Created Successfully!')
       const userInfo = {
-        displayName: user.username
+        displayName: data.username
       }
       updateUser(userInfo)
       .then(()=>{})
@@ -168,7 +168,7 @@ const Signup = () => {
               type="submit"
               className="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900"
             >
-              Log in
+              Signup
             </button>
           </div>
 
