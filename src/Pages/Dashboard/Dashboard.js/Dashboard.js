@@ -14,6 +14,8 @@ const Dashboard = () => {
       name: "Players",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus integer aliquet quisque etiam.",
+        link: "/players"
+      
     },
     {
       id: 2,
@@ -21,13 +23,15 @@ const Dashboard = () => {
       name: "Events",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus integer aliquet quisque etiam.",
+        link: "/events"
     },
     {
       id: 3,
       icon: <img src={AddCampusIcon} />,
-      name: "Add Campus",
+      name: "Campus",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus integer aliquet quisque etiam.",
+        link: "/campus"
     },
     {
       id: 4,
@@ -35,6 +39,7 @@ const Dashboard = () => {
       name: "Validator",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus integer aliquet quisque etiam.",
+        link: "/validators"
     },
   ];
   return (
@@ -49,6 +54,7 @@ const Dashboard = () => {
             icon={card.icon}
             name={card.name}
             description={card.description}
+            link={card.link}
           />
         ))}
       </div>

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Logo from "../../Assets/Images/Logo.png";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -12,7 +12,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,6 +34,18 @@ const Login = () => {
       });
 
   };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+    .then(result => {
+      const user = result.user;
+      navigate(from, { replace: true });
+      console.log(user);
+    })
+    .catch(error => {
+      console.error('error: ', error);
+    })
+  }
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Left Side */}
@@ -113,9 +125,7 @@ const Login = () => {
 
           {/* Forgot Password */}
           <div className="mb-6 text-left">
-            <a href="/otp" className="text-xs text-green-800 hover:underline">
-              Forgot Password?
-            </a>
+            <Link to="/forget-password" className="text-xs text-green-800 hover:underline">Forgot Password?</Link>
           </div>
 
           {/* Login Button */}
@@ -133,9 +143,7 @@ const Login = () => {
             <p className="text-xs text-gray-500 mb-2">
               Don't have an account?{" "}
               <span>
-                <a href="/signup" className="text-green-800 hover:underline">
-                  Create New Account
-                </a>
+                <Link to="/signup" className="text-green-800 hover:underline">Create New Account</Link>
               </span>{" "}
             </p>
           </div>
@@ -143,6 +151,7 @@ const Login = () => {
           {/* Continue with Google */}
           <div className="mb-6">
             <button
+            onClick={handleGoogleSignIn}
               type="submit"
               className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
             >

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 import Logo from "../../Assets/Images/Logo.png";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
-
   const {
     register,
     handleSubmit,
@@ -13,31 +13,63 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, updateUser } = useContext(AuthContext);
-  const [signupError, setSignupError] = useState('');
+  const { createUser, updateUser, verifyEmail, googleSignIn } =
+    useContext(AuthContext);
+  const [signupError, setSignupError] = useState("");
 
-  const handleSignup = (data) => {
-
+  const handleSignup = async (data) => {
     console.log(data);
-    setSignupError('');
-    createUser(data.email, data.password)
-    .then(result => {
+    setSignupError("");
+
+    // Create user in Firebase Authentication
+    try {
+      const result = await createUser(data.email, data.password);
       const user = result.user;
       console.log(user);
-      toast('User Created Successfully!')
+
       const userInfo = {
-        displayName: data.username
+        displayName: data.username,
+      };
+
+      // Verify email
+      await verifyEmail();
+      toast("Please check your email and verify");
+
+      // Update user info
+      await updateUser(userInfo);
+
+      // Send data to API
+      const response = await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+      } else {
+        throw new Error("Failed to send data to API");
       }
-      updateUser(userInfo)
-      .then(()=>{})
-      .catch(err => console.log(err));
-    })
-    .catch(error => {
+    } catch (error) {
       console.log(error);
       setSignupError(error.message);
-    });
-    
+    }
   };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Left Side */}
@@ -172,14 +204,14 @@ const Signup = () => {
             </button>
           </div>
 
-          {/* Create New Account */}
+          {/* Already have an account */}
           <div className="text-center">
             <p className="text-xs text-gray-500 mb-2">
               Already have an account?{" "}
               <span>
-                <a href="/login" className="text-green-800 hover:underline">
+                <Link to="/login" className="text-green-800 hover:underline">
                   Please login
-                </a>
+                </Link>
               </span>{" "}
             </p>
           </div>
@@ -187,6 +219,7 @@ const Signup = () => {
           {/* Continue with Google */}
           <div className="mb-2">
             <button
+              onClick={handleGoogleSignIn}
               type="submit"
               className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
             >
@@ -194,7 +227,9 @@ const Signup = () => {
             </button>
           </div>
           <div>
-            {signupError && <p className="text-xs text-red-600">{signupError}</p>}
+            {signupError && (
+              <p className="text-xs text-red-600">{signupError}</p>
+            )}
           </div>
         </form>
       </div>
