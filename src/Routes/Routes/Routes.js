@@ -24,6 +24,8 @@ import AddItinerary from "../../Pages/Events/Events/AddItinerary";
 import AddOrganizer from "../../Pages/Events/Events/AddOrganizer";
 import About from "../../Pages/Home/Home/About";
 import SupportPage from "../../Pages/Home/Home/Support";
+import ValidatorLogin from "../../Pages/Validators/Validators/ValidatorLogin";
+import UploadCSV from "../../Pages/Validators/Validators/UploadCSV";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +117,14 @@ const router = createBrowserRouter([
   {
     path: "/add-organizer",
     element: <PrivateRoute><AddOrganizer></AddOrganizer></PrivateRoute>,
+  },
+  {
+    path: "/validator-login",
+    element: <PrivateRoute><ValidatorLogin></ValidatorLogin></PrivateRoute>,
+  },
+  {
+    path: "/upload-csv",
+    element: <PrivateRoute><UploadCSV></UploadCSV></PrivateRoute>,
   },
   {
     path: "/about-us",
