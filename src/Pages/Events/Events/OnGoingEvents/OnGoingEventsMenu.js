@@ -34,7 +34,7 @@ const OnGoingEventsMenu = () => {
 
   return (
     <>
-      <div className="flex space-x-2 px-10">
+      <div className="flex flex-wrap justify-center sm:justify-start space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8 xl:space-x-10 2xl:space-x-12 px-4 sm:px-10">
         <button
           className={`px-2 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 ${
             activeButton === "totalPlayers" && "bg-gray-300"

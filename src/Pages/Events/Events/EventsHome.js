@@ -4,7 +4,7 @@ import EventsMenu from './EventsMenu';
 
 const EventsHome = () => {
   return (
-    <div className='bg-gray-50'>
+    <div>
         <Navbar></Navbar>
         <EventsMenu></EventsMenu>
     </div>

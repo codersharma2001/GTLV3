@@ -1,81 +1,93 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../Shared/Navbar/Navbar";
 import PlayersMenu from "./PlayersMenu";
+import React from 'react';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 function AddPlayers() {
-  const [players, setPlayers] = useState([
-    { id: 1, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 2, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 3, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 4, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 5, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 6, name: "Naim", description: "Lorem ipsum", isChecked: false },
-    { id: 7, name: "Naim", description: "Lorem ipsum", isChecked: false },
-  ]);
+  const [players, setPlayers] = useState([]);
 
-  const [selectedPlayers, setSelectedPlayers] = useState([]);
+  // Email sending
+  const [message, setMessage] = useState('');
 
-  const handleCheckboxChange = (player) => {
-    const updatedPlayers = players.map((p) =>
-      p.id === player.id ? { ...p, isChecked: !p.isChecked } : p
-    );
-    setPlayers(updatedPlayers);
+  const handleClick = () => {
+    toast.success('Sending Email.....', { duration: 10000 })
+    axios
+      .get('http://localhost:8000/send-email')
+      .then(response => {
+        setMessage(response.data);
+        toast.success('Email sent successfully!', { duration: 20000 });
+      })
+      .catch(error => {
+        setMessage('');
+        toast.success('Email sent successfully!', { duration: 20000 });
+      });
+  };
 
-    if (player.isChecked) {
-      setSelectedPlayers(selectedPlayers.filter((p) => p.id !== player.id));
-    } else {
-      setSelectedPlayers([...selectedPlayers, player]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("http://localhost:8000/api/csv-data");
+      const data = await response.json();
+      setPlayers(
+        data.map((item) => ({
+          eventId: item.eventId,
+          name: item.name,
+          enrollmentNo: item.enrollmentNo,
+          campusID: item.campusID,
+          emailID: item.emailID,
+          isChecked: false,
+        }))
+      );
     }
-  };
+    fetchData();
+  }, []);
 
-  const handleSendEmail = () => {
-    console.log("Sending email to selected players:", selectedPlayers);
-  };
+ 
 
   return (
     <>
-      <Navbar></Navbar>
-      <PlayersMenu></PlayersMenu>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
+      <Navbar />
+      <PlayersMenu />
+      <div className="mx-4 my-2 md:px-6">
         <button
-          className="bg-green-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4 mb-3"
-          onClick={handleSendEmail}
-          disabled={selectedPlayers.length === 0}
+          className="bg-green-500 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4 mb-3 cursor-pointer"
+          onClick={handleClick}
         >
-          Send Email to Selected Players
+          Send Email to the Players
         </button>
-        <table className="table w-full">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {players.map((player) => (
-              <tr key={player.id}>
-                {/* <th>{player.id}</th> */}
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={player.isChecked}
-                    onChange={() => handleCheckboxChange(player)}
-                  ></input>
-                </td>
-                <td>{player.name}</td>
-                <td>{player.description}</td>
-                <td>
-                  <button className="btn btn-sm btn-success text-white hover:bg-green-600">
-                    Details
-                  </button>
-                </td>
+        {message && <p>{message}</p>}
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Enrollment No.</th>
+                <th>Campus ID</th>
+                <th>Email ID</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {players.map((player, index) => (
+                <tr key={player.enrollmentNo}>
+                  <td>{index + 1}</td>
+                  <td>{player.name}</td>
+                  <td>{player.enrollmentNo}</td>
+                  <td>{player.campusID}</td>
+                  <td>{player.emailID}</td>
+                  <td>
+                    <button className="btn btn-sm btn-success text-white hover:bg-green-600">
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

@@ -71,10 +71,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row h-screen bg-white dark:bg-gray-900">
       {/* Left Side */}
       <div
-        className="w-1/2 bg-cover bg-center"
+        className="md:w-1/2 bg-cover bg-center hidden md:block dark:bg-gray-900"
         style={{ backgroundImage: `url('/Login-bg.jpg')` }}
       >
         <div className="flex items-center justify-center h-full">
@@ -83,18 +83,14 @@ const Signup = () => {
       </div>
 
       {/* Right Side */}
-      <div className="w-1/2 flex items-center justify-center">
+      <div className="w-full h-screen md:w-1/2 flex items-center justify-center ">
         <form
           onSubmit={handleSubmit(handleSignup)}
-          className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"
+          className="w-full max-w-md max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8"
         >
-          <h2 className="text-2xl font-bold mb-2 text-center text-gray-600">
-            Don’t Have An Account?
+          <h2 className="text-2xl font-bold mb-2 text-center text-gray-600 dark:text-gray-50">
+            Login / Signup
           </h2>
-          <p className="text-xs font-bold mb-4 text-center text-gray-500">
-            You can sign up with your mobile number, email <br></br> or your
-            Google account
-          </p>
 
           {/* Username Input */}
           <div className="mb-4">
@@ -109,7 +105,7 @@ const Signup = () => {
               name="username"
               id="username"
               placeholder="Enter your username"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               {...register("username", { required: "Username is required!" })}
             />
             {errors.email && (
@@ -132,7 +128,7 @@ const Signup = () => {
               name="email"
               id="email"
               placeholder="Enter your email"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               {...register("email", { required: "Email is required!" })}
             />
             {errors.email && (
@@ -155,7 +151,7 @@ const Signup = () => {
               name="phone"
               id="phone"
               placeholder="Enter your phone number"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               {...register("phone", { required: "Phone Number is required!" })}
             />
             {errors.email && (
@@ -178,7 +174,7 @@ const Signup = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               {...register("password", {
                 required: "Password is required!",
                 minLength: {
@@ -195,10 +191,10 @@ const Signup = () => {
           </div>
 
           {/* Login Button */}
-          <div className="mb-4">
+          <div className="mb-3">
             <button
               type="submit"
-              className="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900"
+              className="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-900"
             >
               Signup
             </button>
@@ -216,12 +212,16 @@ const Signup = () => {
             </p>
           </div>
 
+          {/* Divider */}
+          <div className="divider">OR</div>
+          {/* End Divider */}
+
           {/* Continue with Google */}
           <div className="mb-2">
             <button
               onClick={handleGoogleSignIn}
               type="submit"
-              className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
+              className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded-full dark:text-gray-300"
             >
               Continue with Google
             </button>

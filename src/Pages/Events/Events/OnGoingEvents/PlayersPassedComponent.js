@@ -20,25 +20,25 @@ const PlayersPassedComponent = () => {
 
   return (
     <div>
-      <h1 className="text-lg font-bold px-10 mt-4">Total Players</h1>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
+      <h1 className="text-lg font-bold px-4 md:px-10 mt-4">Total Players</h1>
+      <div className="w-full overflow-x-auto">
         <table className="table w-full">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Passed Player's Name</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="px-4 md:px-6 py-2 md:py-3"></th>
+              <th className="px-4 md:px-6 py-2 md:py-3">Passed Player's Name</th>
+              <th className="px-4 md:px-6 py-2 md:py-3">Description</th>
+              <th className="px-4 md:px-6 py-2 md:py-3">Action</th>
             </tr>
           </thead>
           <tbody>
             {players.map((player) => (
               <tr key={player.id}>
-                <th>{player.id}</th>
-                <td>{player.name}</td>
-                <td>{player.paymentStatus}</td>
-                <td>
+                <th className="px-4 md:px-6 py-2 md:py-3">{player.id}</th>
+                <td className="px-4 md:px-6 py-2 md:py-3">{player.name}</td>
+                <td className="px-4 md:px-6 py-2 md:py-3">{player.paymentStatus}</td>
+                <td className="px-4 md:px-6 py-2 md:py-3">
                   {!player.added && (
                     <button
                       className="btn btn-sm btn-success text-white hover:bg-green-600"

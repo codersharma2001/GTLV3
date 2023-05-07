@@ -4,7 +4,7 @@ import AddCampusMenu from './AddCampusMenu';
 
 const AddCampusHome = () => {
   return (
-    <div className='bg-gray-50'>
+    <div>
         <Navbar></Navbar>
         <AddCampusMenu></AddCampusMenu>
     </div>

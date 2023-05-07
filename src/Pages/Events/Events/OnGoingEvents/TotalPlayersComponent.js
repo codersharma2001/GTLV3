@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const TotalPlayersComponent = () => {
-  const [players, setPlayers] = useState([
-    { id: 1, name: "Naim Siddiqui", paymentStatus: "Paid" },
-    { id: 2, name: "John Doe", paymentStatus: "Unpaid" },
-    { id: 3, name: "Jane Smith", paymentStatus: "Paid" },
-    { id: 4, name: "Alice Johnson", paymentStatus: "Unpaid" },
-    { id: 5, name: "Bob Williams", paymentStatus: "Paid" },
-    { id: 6, name: "Eve Davis", paymentStatus: "Unpaid" },
-    { id: 7, name: "Tom Brown", paymentStatus: "Paid" },
-  ]);
+  // Initialize the state variable to an empty array
+  const [players, setPlayers] = useState([]);
+
+  // Fetch the data from the API using useEffect hook
+  useEffect(() => {
+    fetch("http://localhost:8000/api/csv-data")
+      .then((response) => response.json())
+      .then((data) => {
+        // Map the API data to the required format and set it in the state
+        const updatedPlayers = data.map((player) => ({
+          id: player.eventId,
+          name: player.name,
+          description: `${player.enrollmentNo} | ${player.campusID} | ${player.emailID}`,
+          paymentStatus: player.paymentStatus,
+          added: false,
+        }));
+        setPlayers(updatedPlayers);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleAddPlayer = (id) => {
     const updatedPlayers = players.map((player) =>
@@ -19,25 +30,25 @@ const TotalPlayersComponent = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-lg font-bold px-10 mt-4">Total Players</h1>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
+    <div className="sm:px-4 md:px-10 mt-4">
+      <h1 className="text-lg font-bold">Total Players</h1>
+      <div className="overflow-x-auto mt-2">
         <table className="table w-full">
           {/* head */}
           <thead>
             <tr>
               <th></th>
-              <th>Players Name</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="sm:text-sm md:text-base">Player's Name</th>
+              <th className="sm:text-sm md:text-base">Description</th>
+              <th className="sm:text-sm md:text-base">Action</th>
             </tr>
           </thead>
           <tbody>
             {players.map((player) => (
               <tr key={player.id}>
                 <th>{player.id}</th>
-                <td>{player.name}</td>
-                <td>{player.paymentStatus}</td>
+                <td className="sm:text-sm md:text-base">{player.name}</td>
+                <td className="sm:text-sm md:text-base">{player.description}</td>
                 <td>
                   {!player.added && (
                     <button

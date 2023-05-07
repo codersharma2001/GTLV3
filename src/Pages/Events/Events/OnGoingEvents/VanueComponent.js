@@ -19,17 +19,17 @@ const VanueComponent = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-lg font-bold px-10 mt-4">Vnues</h1>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
+    <div className="container mx-auto px-4">
+      <h1 className="text-lg font-bold mt-4">Vnues</h1>
+      <div className="my-2 overflow-x-auto">
         <table className="table w-full">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Vanue Name</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="text-left"></th>
+              <th className="text-left">Vanue Name</th>
+              <th className="text-left">Description</th>
+              <th className="text-left">Action</th>
             </tr>
           </thead>
           <tbody>

@@ -19,29 +19,29 @@ const OnGoingRoundComponent = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-lg font-bold px-10 mt-4">Total Players</h1>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
-        <table className="table w-full">
+    <div className="w-full">
+      <h1 className="text-lg font-bold px-4 py-2">Total Players</h1>
+      <div className="w-full overflow-x-auto">
+        <table className="w-full whitespace-nowrap">
           {/* head */}
-          <thead>
+          <thead className="bg-gray-200">
             <tr>
-              <th></th>
-              <th>Round's Name</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2">Round's Name</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {players.map((player) => (
               <tr key={player.id}>
-                <th>{player.id}</th>
-                <td>{player.name}</td>
-                <td>{player.paymentStatus}</td>
-                <td>
+                <th className="border px-4 py-2">{player.id}</th>
+                <td className="border px-4 py-2">{player.name}</td>
+                <td className="border px-4 py-2">{player.paymentStatus}</td>
+                <td className="border px-4 py-2">
                   {!player.added && (
                     <button
-                      className="btn btn-sm btn-success text-white hover:bg-green-600"
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                       onClick={() => handleOnGoingRoundComponent(player.id)}
                     >
                       Details

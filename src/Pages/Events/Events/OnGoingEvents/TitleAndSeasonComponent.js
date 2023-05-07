@@ -19,29 +19,29 @@ const TitleAndSeasonComponent = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-lg font-bold px-10 mt-4">Title and Season</h1>
-      <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-3 overflow-x-auto">
-        <table className="table w-full">
+    <div className="max-w-screen-md mx-auto">
+      <h1 className="text-lg font-bold px-4 pt-4">Title and Season</h1>
+      <div className="px-4 py-2 overflow-x-auto">
+        <table className="table-auto w-full">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Season's Name</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="px-2"></th>
+              <th className="px-2">Season's Name</th>
+              <th className="px-2">Description</th>
+              <th className="px-2"></th>
             </tr>
           </thead>
           <tbody>
             {players.map((player) => (
-              <tr key={player.id}>
-                <th>{player.id}</th>
-                <td>{player.name}</td>
-                <td>{player.paymentStatus}</td>
-                <td>
+              <tr key={player.id} className="border-b border-gray-200">
+                <td className="px-2 py-2">{player.id}</td>
+                <td className="px-2 py-2">{player.name}</td>
+                <td className="px-2 py-2">{player.paymentStatus}</td>
+                <td className="px-2 py-2 text-center">
                   {!player.added && (
                     <button
-                      className="btn btn-sm btn-success text-white hover:bg-green-600"
+                      className="px-2 py-1 rounded bg-green-500 hover:bg-green-600 text-white"
                       onClick={() => handleTitleAndSeason(player.id)}
                     >
                       Details

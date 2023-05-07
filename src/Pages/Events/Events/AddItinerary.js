@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../Shared/Navbar/Navbar";
 import EventsMenu from "./EventsMenu";
 
 const AddItinerary = () => {
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [coverImage, setCoverImage] = useState(null);
@@ -11,9 +14,34 @@ const AddItinerary = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // handle form submission here
+    try {
+      const response = await fetch("http://localhost:8000/app/itinerary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          startDate,
+          endDate,
+          startTime,
+          endTime,
+        }),
+      });
+      const data = await response.json();
+      setSuccessMessage(data.message);
+      setTitle("");
+      setDescription("");
+      setStartDate("");
+      setEndDate("");
+      setStartTime("");
+      setEndTime("");
+    } catch (error) {
+      setErrorMessage("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -21,7 +49,13 @@ const AddItinerary = () => {
       <Navbar />
       <EventsMenu />
       <div className="md:w-auto lg:w-auto xl:w-auto mx-10 my-2 px-8 py-8">
-        <form className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+      {successMessage && (
+            <p className="text-green-600 font-medium mb-4">{successMessage}</p>
+          )}
+          {errorMessage && (
+            <p className="text-red-600 font-medium mb-4">{errorMessage}</p>
+          )}
+        <form onSubmit={handleSubmit} className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-600 mb-8">
             Add an Itinerary
           </h2>

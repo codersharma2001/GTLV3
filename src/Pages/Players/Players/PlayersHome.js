@@ -3,13 +3,16 @@ import Navbar from '../../Shared/Navbar/Navbar';
 import PlayersMenu from './PlayersMenu';
 import PlayersFilter from './PlayersFilter';
 import AddPlayers from './AddPlayers';
+import EventSlider from './EventSlider';
+import JoinTheDAOcard from './JoinTheDAOcard';
 
 const PlayersHome = () => {
   return (
-    <div className='bg-gray-50'>
+    <div>
         <Navbar></Navbar>
         <PlayersMenu></PlayersMenu>
-        <PlayersFilter></PlayersFilter>
+        <EventSlider></EventSlider>
+        <JoinTheDAOcard></JoinTheDAOcard>
     </div>
   );
 };

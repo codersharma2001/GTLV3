@@ -13,14 +13,13 @@ const Login = () => {
   } = useForm();
 
   const { signIn, googleSignIn } = useContext(AuthContext);
-  const [loginError, setLoginError] = useState('');
+  const [loginError, setLoginError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
   const from = location.state?.from?.pathname || "/dashboard";
 
   const handleLogin = (data) => {
-
     console.log(data);
     signIn(data.email, data.password)
       .then((result) => {
@@ -32,50 +31,49 @@ const Login = () => {
         console.log(error.message);
         setLoginError(error.message);
       });
-
   };
 
   const handleGoogleSignIn = () => {
     googleSignIn()
-    .then(result => {
-      const user = result.user;
-      navigate(from, { replace: true });
-      console.log(user);
-    })
-    .catch(error => {
-      console.error('error: ', error);
-    })
-  }
+      .then((result) => {
+        const user = result.user;
+        navigate(from, { replace: true });
+        console.log(user);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div class="flex flex-col md:flex-row h-screen bg-gray-100 dark:bg-gray-900">
       {/* Left Side */}
       <div
-        className="w-1/2 bg-cover bg-center"
+        class="w-full md:w-1/2 bg-cover bg-center h-64 md:h-auto hidden md:block"
         style={{ backgroundImage: `url('/Login-bg.jpg')` }}
       >
-        <div className="flex items-center justify-center h-full">
-          <img src={Logo} alt="Logo" className="w-1/2" />
+        <div class="flex items-center justify-center h-full">
+          <img src={Logo} alt="Logo" class="w-1/2" />
         </div>
       </div>
 
       {/* Right Side */}
-      <div className="w-1/2 flex items-center justify-center">
+      <div class="w-full h-screen md:w-1/2 flex items-center justify-center ">
         <form
           onSubmit={handleSubmit(handleLogin)}
-          className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"
+          class="w-full max-w-md max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8"
         >
-          <h2 className="text-2xl font-bold mb-2 text-center text-gray-600">
-            Let’s get started!
+          <h2 class="text-2xl font-bold mb-2 text-center text-gray-600 dark:text-gray-200">
+            Login / Signup
           </h2>
-          <p className="text-xs font-bold mb-4 text-center text-gray-500">
-            Are you ready to dive into <br></br> the GTL?
+          <p class="text-xs font-bold mb-4 text-center text-gray-500 dark:text-gray-400">
+            Enter your email and password
           </p>
 
           {/* Username Input */}
-          <div className="mb-6">
+          <div class="mb-6">
             <label
               htmlFor="username"
-              className="text-xs text-gray-600 block font-bold mb-2"
+              class="text-xs text-gray-600 block font-bold mb-2"
             >
               Email
             </label>
@@ -84,21 +82,19 @@ const Login = () => {
               name="email"
               id="email"
               placeholder="Enter your e email"
-              className="w-full px-3 py-2 border rounded"
+              class="w-full px-3 py-2 border rounded-full dark:bg-gray-600 dark:text-gray-200"
               {...register("email", { required: "Email is required!" })}
             />
             {errors.email && (
-              <span className="text-red-600 text-xs">
-                {errors.email?.message}
-              </span>
+              <span class="text-red-600 text-xs">{errors.email?.message}</span>
             )}
           </div>
 
           {/* Password Input */}
-          <div className="mb-1">
+          <div class="mb-1">
             <label
               htmlFor="password"
-              className="text-xs text-gray-600 block font-bold mb-2"
+              class="text-xs text-gray-600 block font-bold mb-2"
             >
               Password
             </label>
@@ -107,7 +103,7 @@ const Login = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
-              className="w-full px-3 py-2 border rounded"
+              class="w-full px-3 py-2 border rounded-full dark:bg-gray-600 dark:text-gray-200"
               {...register("password", {
                 required: "Password is required!",
                 minLength: {
@@ -117,22 +113,27 @@ const Login = () => {
               })}
             />
             {errors.password && (
-              <span className="text-red-600 text-xs">
+              <span class="text-red-600 text-xs">
                 {errors.password?.message}
               </span>
             )}
           </div>
 
           {/* Forgot Password */}
-          <div className="mb-6 text-left">
-            <Link to="/forget-password" className="text-xs text-green-800 hover:underline">Forgot Password?</Link>
+          <div class="mb-6 text-left">
+            <Link
+              to="/forget-password"
+              class="text-xs text-green-800 dark:text-green-400 hover:underline"
+            >
+              Forgot Password?
+            </Link>
           </div>
 
           {/* Login Button */}
-          <div className="mb-6">
+          <div class="mb-3">
             <button
               type="submit"
-              className="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900"
+              class="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-900 dark:bg-green-600 dark:text-gray-200 dark:hover:bg-green-700"
             >
               Log in
             </button>
@@ -140,20 +141,29 @@ const Login = () => {
 
           {/* Create New Account */}
           <div className="text-center">
-            <p className="text-xs text-gray-500 mb-2">
+            <p className="text-xs text-gray-500 mb-2 dark:text-gray-300">
               Don't have an account?{" "}
               <span>
-                <Link to="/signup" className="text-green-800 hover:underline">Create New Account</Link>
+                <Link
+                  to="/signup"
+                  className="text-green-800 hover:underline dark:text-green-400"
+                >
+                  Create New Account
+                </Link>
               </span>{" "}
             </p>
           </div>
 
+          {/* Divider */}
+          <div className="divider">OR</div>
+          {/* End Divider */}
+
           {/* Continue with Google */}
           <div className="mb-6">
             <button
-            onClick={handleGoogleSignIn}
+              onClick={handleGoogleSignIn}
               type="submit"
-              className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
+              className="w-full bg-transparent hover:bg-gray-500 text-gray-600 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent dark:text-gray-300 rounded-full"
             >
               Continue with Google
             </button>

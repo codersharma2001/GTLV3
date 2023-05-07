@@ -47,7 +47,7 @@ const Dashboard = () => {
     <Navbar></Navbar>
         <div className="h-screen bg-gray-50 font-regular text-white flex items-center justify-center">
         <div className="flex justify-center">
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-5 mt-96 md:mt-0">
         {cards.map((card) => (
           <Card
             key={card.id}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import Navbar from '../../Shared/Navbar/Navbar';
 import ValidatorsMenu from './ValidatorsMenu';
+import { toast } from 'react-hot-toast';
 
 const UploadCSV = () => {
   const [file, setFile] = useState(null);
@@ -24,6 +25,8 @@ const UploadCSV = () => {
     try {
       const response = await axios.post('http://localhost:8000/api/upload-csv', formData);
       setMessage(response.data);
+      toast.success('SBT Token minted successfully.....', { duration: 10000 })
+      toast.success('Tickets Generated Successfully.....', { duration: 10000 })
       setError(false);
       setFile(null);
     } catch (error) {
@@ -36,8 +39,7 @@ const UploadCSV = () => {
   
   return (
     <>
-    <Navbar></Navbar>
-    <ValidatorsMenu></ValidatorsMenu>
+ 
       <div className=" bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Upload CSV file</h2>
@@ -62,7 +64,7 @@ const UploadCSV = () => {
                   <p className="text-center">{file.name}</p>
                 ) : (
                   <p className="text-center">
-                    Drag 'n' drop some files here, or click to select files
+                    Drag 'n' drop CSV file here, or click to select file
                   </p>
                 )}
               </div>

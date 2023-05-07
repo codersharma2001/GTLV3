@@ -15,20 +15,17 @@ const Navbar = () => {
     <div className="navbar bg-base-100 border-b-2">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-lg text-green-600">
-          <Link to='/'>GTL-Playbook</Link>
+          <Link to="/">GTL-Playbook</Link>
         </a>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a><Link to='/'>Home</Link></a>
+            <a>
+              <Link to="/">Home</Link>
+            </a>
           </li>
-          <li>
-            <a><Link to='/about-us'>About</Link></a>
-          </li>
-          <li>
-            <a><Link to='/support'>Support</Link></a>
-          </li>
+
           {user?.uid ? (
             <li tabIndex={0}>
               <a>
@@ -44,6 +41,16 @@ const Navbar = () => {
                 </svg>
               </a>
               <ul className="p-2 bg-base-100">
+                <li>
+                  <a>
+                    <Link to="/about-us">About</Link>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <Link to="/support">Support</Link>
+                  </a>
+                </li>
                 <li>
                   <button onClick={handleLogOut}>Logout</button>
                 </li>
