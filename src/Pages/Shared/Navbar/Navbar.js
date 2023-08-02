@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import profilePicture from "../../Dashboard/Dashboard.js/Setting";
 
-const Navbar = () => {
+const Navbar = ({ profilePicture }) => {
   const { user, logOut } = useContext(AuthContext);
   console.log(user);
   const handleLogOut = () => {
@@ -12,11 +13,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 border-b-2">
+    <div className="navbar bg-base-100 border-b-1">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-lg text-green-600">
           <Link to="/">GTL-Playbook</Link>
         </a>
+        Hi {user?.displayName} !
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
@@ -29,6 +31,13 @@ const Navbar = () => {
           {user?.uid ? (
             <li tabIndex={0}>
               <a>
+              {profilePicture && (
+                  <img
+                    src={profilePicture}
+                    alt="Profile"
+                    className="w-8 h-8 rounded-full mr-2"
+                  />
+                )}
                 {user.displayName}
                 <svg
                   className="fill-current"

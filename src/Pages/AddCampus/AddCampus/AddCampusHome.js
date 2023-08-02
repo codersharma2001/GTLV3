@@ -5,7 +5,7 @@ import AddCampusMenu from './AddCampusMenu';
 const AddCampusHome = () => {
   return (
     <div>
-        <Navbar></Navbar>
+        {/* <Navbar></Navbar> */}
         <AddCampusMenu></AddCampusMenu>
     </div>
   );
